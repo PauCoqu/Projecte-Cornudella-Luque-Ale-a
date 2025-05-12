@@ -1,4 +1,4 @@
-function [X, Z] = rotar_perfil(X, Z, alpha)
+function [X, Z, alpha_rad] = rotar_perfil(X, Z, alpha, alpha_rad)
 
     % Convertim l'angle a radians
     alpha_rad = deg2rad(alpha);

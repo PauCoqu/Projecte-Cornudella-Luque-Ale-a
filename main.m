@@ -41,12 +41,17 @@ end
 
 % Rotar el perfil
 alpha = input('Introduïu l angle datac (en graus): ');
-[X, Z] = rotar_perfil(X, Z, alpha);
+[X, Z, alpha_rad] = rotar_perfil(X, Z, alpha);
 
-% Discretitzar el perfil
-[X_c, Z_c, N_panells,nx,nz,l] = metode_panells(X, Z);
+% Discretitzar el perfil. Calcul gamma.
+[X_c, Z_c, nx, nz, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul] = metode_panells(X, Z, alpha_rad);
+
+% Calcular la sustentació (C_L) i Cm_1/4
+[Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c, Z_c, Normal);
+
+
+%%2. Mach crític per a alpha=[0, 2, 4]º%%
 
 
 
-% Calcular la sustentació (C_L) i la circulació (gamma)
-[Cl, Cm14, Cm0, Cp] = calcular_coeficients(gamma_vec, l, Q_inf_m, alpha_rad, N, X, X_c);
+
