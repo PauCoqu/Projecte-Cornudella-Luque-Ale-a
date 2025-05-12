@@ -1,4 +1,4 @@
-function [X_c, Z_c, N_panells,nx,nz,l] = discretitzar_perfil(X, Z)
+function [X_c, Z_c, N_panells,nx,nz,l] = metode_panells(X, Z)
     % Discretitza el perfil en panells i calcula els punts de control i els punts centrals 
    
     N_panells = length(X) - 1; %Numero de panells     
