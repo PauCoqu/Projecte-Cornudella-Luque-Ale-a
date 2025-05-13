@@ -5,9 +5,10 @@ function [X_c, Z_c, nx, nz, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul] = met
     nx = zeros(N, 1);
     nz = zeros(N, 1);
     l = zeros(N, 1);
-
     Tangent = zeros(N, 2);  % Vectors tangents
     Normal = zeros(N, 2);   % Vectors normals
+    calphaj = zeros (1,N);
+    salphaj = zeros (1,N);
     
     % Calcular longituds i normals dels panells
     for j = 1:N
@@ -17,7 +18,7 @@ function [X_c, Z_c, nx, nz, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul] = met
         nx(j) = dz / l(j);   %ALTANTO
         nz(j) = -dx / l(j);  %ALTANTO
 
-    % Cálculo del coseno y seno del ángulo del panell
+    % Càlcul del cos i sen de l'àngle del panell
     calphaj(j) = dx / l(j);         % cos(α)
     salphaj(j) = -dz / l(j);        % -sin(α)
 

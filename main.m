@@ -32,7 +32,7 @@ switch file_name
     case 6
         file_name = 'NACA_22112_N_512.txt'; 
     otherwise
-        disp('Elecció no vàlida. S assigna el fitxer per defecte: NACA_0012_N_16.txt');
+        disp('Elecció no vàlida. S''assigna el fitxer per defecte: NACA_0012_N_16.txt');
         file_name = 'NACA_22112_N_16.txt';
 end
 
@@ -40,7 +40,7 @@ end
 [X, Z] = llegir_punts_perfils(file_name);
 
 % Rotar el perfil
-alpha = input('Introduïu l angle datac (en graus): ');
+alpha = input('Introduïu l''angle datac (en graus): ');
 [X, Z, alpha_rad] = rotar_perfil(X, Z, alpha);
 
 % Discretitzar el perfil. Calcul gamma.
