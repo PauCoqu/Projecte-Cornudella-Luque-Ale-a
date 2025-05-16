@@ -1,12 +1,9 @@
-function [X_c, Z_c, nx, nz, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul] = metode_panells(X, Z, alpha_rad)
-    % Discretitza el perfil en panells i calcula els punts de control i els punts centrals 
-   
+function [X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul] = metode_panells(X, Z, alpha_rad);
+
     N = length(X) - 1; %Numero de panells     
-    nx = zeros(N, 1);
-    nz = zeros(N, 1);
     l = zeros(N, 1);
-    Tangent = zeros(N, 2);  % Vectors tangents
-    Normal = zeros(N, 2);   % Vectors normals
+    Tangent = zeros(N, 2);
+    Normal = zeros(N, 2);   
     calphaj = zeros (1,N);
     salphaj = zeros (1,N);
     
@@ -15,24 +12,20 @@ function [X_c, Z_c, nx, nz, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul] = met
         dx = X(j+1) - X(j);
         dz = Z(j+1) - Z(j);
         l(j) = sqrt(dx^2 + dz^2);
-        nx(j) = dz / l(j);   %ALTANTO
-        nz(j) = -dx / l(j);  %ALTANTO
+        calphaj(j) = dx / l(j);         % cos(α) del panell
+        salphaj(j) = -dz / l(j);        % -sin(α) del panell
 
-    % Càlcul del cos i sen de l'àngle del panell
-    calphaj(j) = dx / l(j);         % cos(α)
-    salphaj(j) = -dz / l(j);        % -sin(α)
-
-    % Vector tangent i normal (sentit matemàtic estàndard)
-    Tangent(j, :) = [calphaj(j), -salphaj(j)];
-    Normal(j, :) = [salphaj(j),  calphaj(j)];
+        % Vector tangent i normal (sentit matemàtic estàndard)
+        Tangent(j, :) = [calphaj(j), -salphaj(j)];
+        Normal(j, :) = [salphaj(j),  calphaj(j)];
     
     end
     
-    % Punts de control per panell (punt mitjà de cada panell)
+    % Punts de control per panell
     X_c = (X(1:end-1) + X(2:end)) / 2;
     Z_c = (Z(1:end-1) + Z(2:end)) / 2;
 
-    %%Cálcul de gamma
+    % Cálcul de gamma
 
     U_inf=1;
     Q_inf = [U_inf*cos(alpha_rad), U_inf*sin(alpha_rad)];
@@ -42,18 +35,14 @@ function [X_c, Z_c, nx, nz, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul] = met
     A = zeros(N, N);
     b = zeros(N, 1);
 
-     % Calcular salphaj i calphaj per a cada panell
-    calphaj = Tangent(:,1);
-    salphaj = -Tangent(:,2);
-
     % Construir matriu A i vector b
     for i = 1:N
-        b(i) = -dot(Q_inf, Tangent(i, :));
+        b(i) = -dot(Q_inf, Tangent(i, :)); %producte escalar (pag. 40)
         for j = 1:N
             if j == i
-                A(i,j) = -0.5;
+                A(i,j) = -0.5; %autoinducció (pag. 43)
             else
-                % Coordenades del punt de control i respecte al panell j
+                % Coordenades del punt de control i respecte al panell j (pag. 41)
                 X_diff = X_c(i) - X(j);
                 Z_diff = Z_c(i) - Z(j);
                 X_cpanj = X_diff * calphaj(j) - Z_diff * salphaj(j);
@@ -65,19 +54,21 @@ function [X_c, Z_c, nx, nz, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul] = met
                 theta1 = atan2(Z_cpanj, X_cpanj);
                 theta2 = atan2(Z_cpanj, X_cpanj - l(j));
 
-                w = (1/(4*pi)) * log(r2^2 / r1^2);
-                u = (theta2 - theta1) / (2*pi);
-
+                % Velocitat induida (pag 41)
+                w = (1/(4*pi)) * log(r2^2 / r1^2); 
+                u = (theta2 - theta1) / (2*pi); 
+                
+                % Velocitat coordenades globals (pag 43)
                 u_ij = u * calphaj(j) + w * salphaj(j);
                 w_ij = -u * salphaj(j) + w * calphaj(j);
+                A(i,j) = u_ij * calphaj(1,i) - w_ij *salphaj(1,i); %producte escalar
 
-                A(i,j) = u_ij * Tangent(i,1) + w_ij * Tangent(i,2);
             end
         end
     end
 
-    % Condició de Kutta al panell de sortida (aproximadament 1/4 del perfil)
-    kutta_idx = round(N / 4);
+    % Condició de Kutta al panell de sortida (aproximadament 1/2 del perfil)
+    kutta_idx = round(N/2); %
     A(kutta_idx, :) = 0;
     A(kutta_idx, 1) = 1;
     A(kutta_idx, N) = 1;

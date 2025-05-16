@@ -44,7 +44,7 @@ alpha = input('Introduïu l''angle datac (en graus): ');
 [X, Z, alpha_rad] = rotar_perfil(X, Z, alpha);
 
 % Discretitzar el perfil. Calcul gamma.
-[X_c, Z_c, nx, nz, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul] = metode_panells(X, Z, alpha_rad);
+[X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul] = metode_panells(X, Z, alpha_rad);
 
 % Calcular la sustentació (C_L) i Cm_1/4
 [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c, Z_c, Normal);
