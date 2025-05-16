@@ -1,4 +1,4 @@
-function [X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul] = metode_panells(X, Z, alpha_rad);
+function [X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul, N] = metode_panells(X, Z, alpha_rad);
 
     N = length(X) - 1; %Numero de panells     
     l = zeros(N, 1);
@@ -76,5 +76,4 @@ function [X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul] = metode_pane
 
     % Resolució del sistema lineal
     gamma = A \ b;
-
 end
