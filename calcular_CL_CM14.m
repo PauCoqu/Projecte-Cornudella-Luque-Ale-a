@@ -15,7 +15,7 @@ function [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c
     for i = 1:N
         partf = gamma(i) * l(i);                       % Contribució de cada panell a la circulació
         Vi_ext(i) = abs(gamma(i));                     % Intensitat de la velocitat induïda
-        Cp(i) = 1 - (gamma(i) / Q_inf_modul)^2;           
+        Cp(i) = 1 - (gamma(i) / Q_inf_modul)^2;  %Hi havia Q_inf_modul          
         F = F + partf;
 
         deltaX = X(i+1) - X(i);
