@@ -53,8 +53,7 @@ alpha = input('Introduïu l''angle datac (en graus): ');
 %%2. Mach crític per a alpha=[0, 2, 4]º%%
 
 gamma_aire=1.4;
-
-[Cp_0, Cp_kt, Cp_crit, Cp_intersec, M_cr] = M_critic(alpha_rad, Cp, N, gamma_aire);
+[Cp_0, Cp_kt, Cp_star, Cp_crit, M_crit] = M_critic(Cp, N, gamma_aire);
 
 
 
