@@ -55,5 +55,14 @@ alpha = input('Introduïu l''angle datac (en graus): ');
 gamma_aire=1.4;
 [Cp_0, Cp_kt, Cp_star, Cp_crit, M_crit] = M_critic(Cp, N, gamma_aire);
 
+%%3. C_l per a alpha=2 i per diferents M_inf%%
 
+rho_aire=1.225;
+T_inf=288.15;
+R=287;
 
+[Mach_vector, Q_inf_3, Cl_3, Cl_3_corregit] = apartat3(M_crit, gamma_aire, R, T_inf, rho_aire, gamma, l);
+
+%-------------------------------------------------------------------------------------------------------
+%SEGONA PART.
+%-------------------------------------------------------------------------------------------------------

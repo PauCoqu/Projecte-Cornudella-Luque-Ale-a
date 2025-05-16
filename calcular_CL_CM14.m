@@ -17,10 +17,9 @@ function [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c
         Vi_ext(i) = abs(gamma(i));                     % Intensitat de la velocitat induïda
         Cp(i) = 1 - (gamma(i) / Q_inf_modul)^2;  %Hi havia Q_inf_modul          
         F = F + partf;
-
+        
         deltaX = X(i+1) - X(i);
         deltaZ = Z(i+1) - Z(i);
-
         Cm0_sum = Cm0_sum + Cp(i) * ((X_c(i) * deltaX + Z_c(i) * deltaZ) / c^2);
     end
 
