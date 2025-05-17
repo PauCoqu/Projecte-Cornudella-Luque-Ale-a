@@ -26,7 +26,6 @@ function [X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul, N] = metode_p
     Z_c = (Z(1:end-1) + Z(2:end)) / 2;
 
     % Cálcul de gamma
-
     U_inf=1;
     Q_inf = [U_inf*cos(alpha_rad), U_inf*sin(alpha_rad)];
     Q_inf_modul=norm(Q_inf);
@@ -67,7 +66,7 @@ function [X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul, N] = metode_p
         end
     end
 
-    % Condició de Kutta al panell de sortida (aproximadament 1/2 del perfil)
+    % Condició de Kutta (aproximadament 1/2 de la corda)
     kutta_idx = round(N/2); %
     A(kutta_idx, :) = 0;
     A(kutta_idx, 1) = 1;

@@ -2,8 +2,6 @@ function [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c
 
     N = length(gamma);
 
-    Cl = 0;
-    Cm0 = 0;
     Cp = zeros(N,1);
     Vi_ext = zeros(N,1);
 
@@ -28,7 +26,7 @@ function [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c
     Cm14 = Cm0 + 0.25 * Cl;
 
 
-%%Plot perfil+ coeficient pressions:
+%Plot perfil+ coeficient pressions:
 figure;
 hold on;
 

@@ -36,7 +36,7 @@ switch file_name
         file_name = 'NACA_22112_N_16.txt';
 end
 
-% Cridar la funció per llegir les coordenades X i Z
+% Llegir les coordenades X i Z
 [X, Z] = llegir_punts_perfils(file_name);
 
 % Rotar el perfil
@@ -46,7 +46,7 @@ alpha = input('Introduïu l''angle datac (en graus): ');
 % Discretitzar el perfil. Calcul gamma.
 [X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul, N] = metode_panells(X, Z, alpha_rad);
 
-% Calcular la sustentació (C_L) i Cm_1/4
+% Calcular la sustentació (C_l) i Cm_1/4
 [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c, Z_c, Normal);
 
 
