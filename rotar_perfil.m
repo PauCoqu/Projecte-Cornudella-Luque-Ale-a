@@ -15,11 +15,11 @@ function [X, Z, alpha_rad] = rotar_perfil(X, Z, alpha)
     Z = coords(2, :);
 
     % Visualitzar el perfil
-    figure;
-    plot(X, Z, '-o');
-    title(['Perfil NACA 0012 amb angle d''atac \alpha = ', num2str(alpha), '°']);
-    xlabel('X');
-    ylabel('Z');
-    grid on;
-    axis equal;
+    %figure;
+    %plot(X, Z, '-o');
+    %title(['Perfil NACA 0012 amb angle d''atac \alpha = ', num2str(alpha), '°']);
+    %xlabel('X');
+    %ylabel('Z');
+    %grid on;
+    %axis equal;
 end

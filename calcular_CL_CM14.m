@@ -1,19 +1,17 @@
 function [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c, Z_c, Normal)
 
     N = length(gamma);
-
     Cp = zeros(N,1);
     Vi_ext = zeros(N,1);
-
     F = 0;          % Força de sustentació (proporcional a la circulació total)
     Cm0_sum = 0;    % Suma per calcular el moment respecte l'origen
-
     c = 1; % Longitud de la corda (assumida constant)
 
     for i = 1:N
-        partf = gamma(i) * l(i);                       % Contribució de cada panell a la circulació
-        Vi_ext(i) = abs(gamma(i));                     % Intensitat de la velocitat induïda
-        Cp(i) = 1 - (gamma(i) / Q_inf_modul)^2;  %Hi havia Q_inf_modul          
+        partf = gamma(i) * l(i);    % Contribució de cada panell a la circulació
+        Vi_ext(i) = abs(gamma(i));  % Intensitat de la velocitat induïda (pag. 49)
+        
+        Cp(i) = 1 - (gamma(i) / Q_inf_modul)^2;          
         F = F + partf;
         
         deltaX = X(i+1) - X(i);

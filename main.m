@@ -1,4 +1,4 @@
-%% CODI PROJECT PART 1
+%% CODI PROJECTE PART 1
 %---------------------------------------------
 % Data: 25/04/2025
 % Membres: Antonio Luque, Pau Cornudella i Alex Aleñà
@@ -50,12 +50,12 @@ alpha = input('Introduïu l''angle datac (en graus): ');
 [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c, Z_c, Normal);
 
 
-%%2. Mach crític per a alpha=[0, 2, 4]º%%
+%2. Mach crític per a alpha=[0, 2, 4]º%%
 
 gamma_aire=1.4;
 [Cp_0, Cp_kt, Cp_star, Cp_crit, M_crit] = M_critic(Cp, N, gamma_aire);
 
-%%3. C_l per a alpha=2 i per diferents M_inf%%
+%3. C_l per a alpha=2 i per diferents M_inf%%
 
 rho_aire=1.225;
 T_inf=288.15;
@@ -63,6 +63,12 @@ R=287;
 
 [Mach_vector, Q_inf_3, Cl_3, Cl_3_corregit] = apartat3(M_crit, gamma_aire, R, T_inf, rho_aire, gamma, l);
 
-%-------------------------------------------------------------------------------------------------------
-%SEGONA PART.
-%-------------------------------------------------------------------------------------------------------
+%% CODI PROJECTE PART 2
+%---------------------------------------------
+% Data: 16/05/2025
+% Membres: Antonio Luque, Pau Cornudella i Alex Aleñà
+% Assignatura: AERODINÀMICA, MECÀNICA DE VOL I ORBITAL
+% Grup: 6
+% ---------------------------------------------
+
+
