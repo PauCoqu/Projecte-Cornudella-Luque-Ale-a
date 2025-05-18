@@ -41,14 +41,14 @@ end
 alpha = input('Introduïu l''angle datac (en graus): ');
 alpha_rad = deg2rad(alpha);
 
-% Rotar el perfil
-%[X, Z] = rotar_perfil(X, Z,alpha_rad);
-
 % Discretitzar el perfil. Calcul gamma.
 [X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul, N] = metode_panells(X, Z, alpha_rad);
 
 % Calcular la sustentació (C_l) i Cm_1/4
 [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c, Z_c, Normal);
+
+% Rotar el perfil i gràficar Cp
+rotar_perfil(X, Z,alpha_rad, Normal,Cp)
 
 
 %2. Mach crític per a alpha=[0, 2, 4]º%%
