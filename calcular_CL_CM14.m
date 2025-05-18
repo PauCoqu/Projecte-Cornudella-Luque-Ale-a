@@ -1,4 +1,4 @@
-function [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c, Z_c, Normal)
+function [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c, Z_c)
 
     N = length(gamma);
     Cp = zeros(N,1);
