@@ -1,8 +1,5 @@
-function [X, Z, alpha_rad] = rotar_perfil(X, Z, alpha)
+function [X, Z] = rotar_perfil(X, Z,alpha_rad)
 
-    % Convertim l'angle a radians
-    alpha_rad = deg2rad(alpha);
-    
     % Matriu de rotació
     R = [cos(alpha_rad), sin(alpha_rad);
          -sin(alpha_rad), cos(alpha_rad)];

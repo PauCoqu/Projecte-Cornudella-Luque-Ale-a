@@ -4,8 +4,8 @@ function [X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul, N] = metode_p
     l = zeros(N, 1);
     Tangent = zeros(N, 2);
     Normal = zeros(N, 2);   
-    calphaj = zeros (1,N);
-    salphaj = zeros (1,N);
+    calphaj = zeros (N,1);
+    salphaj = zeros (N,1);
     
     % Calcular longituds i normals dels panells
     for j = 1:N
@@ -60,7 +60,7 @@ function [X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul, N] = metode_p
                 % Velocitat coordenades globals (pag 43)
                 u_ij = u * calphaj(j) + w * salphaj(j);
                 w_ij = -u * salphaj(j) + w * calphaj(j);
-                A(i,j) = u_ij * calphaj(1,i) - w_ij *salphaj(1,i); %producte escalar
+                A(i,j) = u_ij * calphaj(i,1) - w_ij *salphaj(i,1); %producte escalar
 
             end
         end

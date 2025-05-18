@@ -26,7 +26,6 @@ function [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c
     Cp(N/4) = (Cp((N/4)+1) + Cp((N/4)-1))/2;
 
 
-%Plot perfil+ coeficient pressions:
 figure;
 hold on;
 
@@ -36,20 +35,24 @@ plot(X, Z, 'k-', 'DisplayName', 'Perfil');
 % Escala dels vectors
 scale = 0.5;
 
-for i = 1:length(Cp)
-    % Escalem la normal amb el valor absolut de Cp
-    dx = scale * abs(Cp(i)) * Normal(i,1);
-    dz = scale * abs(Cp(i)) * Normal(i,2);
+% Colors suaus personalitzats
+blau_suau = [0.4 0.6 1];
+vermell_suau = [1 0.4 0.4];
 
-    % Assignem color segons el signe de Cp (però el vector sempre surt cap a fora)
+for i = 1:length(Cp)
+    n = Normal(i,:) / norm(Normal(i,:));  % normalitzem la normal
+    dx = scale * abs(Cp(i)) * n(1);
+    dz = scale * abs(Cp(i)) * n(2); 
+
+    % Assignem color suau segons signe de Cp
     if Cp(i) < 0
-        color = 'b';
+        color = blau_suau;
     else
-        color = 'r';
+        color = vermell_suau;
     end
 
-    % Dibuix del vector
-    quiver(X_c(i), Z_c(i), dx, dz, 0, color, 'LineWidth', 1);
+    % Dibuix del vector amb línia més fina
+    quiver(X_c(i), Z_c(i), dx, dz, 0, 'Color', color, 'LineWidth', 0.5);
 end
 
 axis equal;
@@ -58,6 +61,4 @@ ylabel('Z');
 title('Vectors del coeficient de pressió C_p');
 grid on;
 hold off;
-
-end
 

@@ -38,10 +38,11 @@ end
 
 % Llegir les coordenades X i Z
 [X, Z] = llegir_punts_perfils(file_name);
+alpha = input('Introduïu l''angle datac (en graus): ');
+alpha_rad = deg2rad(alpha);
 
 % Rotar el perfil
-alpha = input('Introduïu l''angle datac (en graus): ');
-[X, Z, alpha_rad] = rotar_perfil(X, Z, alpha);
+%[X, Z] = rotar_perfil(X, Z,alpha_rad);
 
 % Discretitzar el perfil. Calcul gamma.
 [X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul, N] = metode_panells(X, Z, alpha_rad);
@@ -51,17 +52,15 @@ alpha = input('Introduïu l''angle datac (en graus): ');
 
 
 %2. Mach crític per a alpha=[0, 2, 4]º%%
-
 gamma_aire=1.4;
-[Cp_0, Cp_kt, Cp_star, Cp_crit, M_crit] = M_critic(Cp, N, gamma_aire);
+%[Cp_0, Cp_kt, Cp_star, Cp_crit, M_crit] = M_critic(Cp, N, gamma_aire);
 
 %3. C_l per a alpha=2 i per diferents M_inf%%
-
 rho_aire=1.225;
 T_inf=288.15;
 R=287;
 
-[Mach_vector, Q_inf_3, Cl_3, Cl_3_corregit] = apartat3(M_crit, gamma_aire, R, T_inf, rho_aire, gamma, l);
+%[Mach_vector, Q_inf_3, Cl_3, Cl_3_corregit] = apartat3(M_crit, gamma_aire, R, T_inf, rho_aire, gamma, l);
 
 %% CODI PROJECTE PART 2
 %---------------------------------------------
