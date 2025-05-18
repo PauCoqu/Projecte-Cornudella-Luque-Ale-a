@@ -3,16 +3,14 @@ function [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c
     N = length(gamma);
     Cp = zeros(N,1);
     Vi_ext = zeros(N,1);
-    F = 0;          % Força de sustentació (proporcional a la circulació total)
-    Cm0_sum = 0;    % Suma per calcular el moment respecte l'origen
+    F = 0;          
+    Cm0_sum = 0;    
     c = 1; % Longitud de la corda (assumida constant)
 
     for i = 1:N
-        partf = gamma(i) * l(i);    % Contribució de cada panell a la circulació
         Vi_ext(i) = abs(gamma(i));  % Intensitat de la velocitat induïda (pag. 49)
-        
         Cp(i) = 1 - (gamma(i) / Q_inf_modul)^2;          
-        F = F + partf;
+        F = F + gamma(i) * l(i); %sumatori de contribucions dels panells sobre el Lift
         
         deltaX = X(i+1) - X(i);
         deltaZ = Z(i+1) - Z(i);
@@ -22,6 +20,10 @@ function [Cl, Cm14, Cm0, Cp] = calcular_CL_CM14(gamma, l, Q_inf_modul, X, Z, X_c
     Cl = 2 * F / (Q_inf_modul * c);
     Cm0 = Cm0_sum;
     Cm14 = Cm0 + 0.25 * Cl;
+
+
+    %Corregim el Cp al perfil N/4
+    Cp(N/4) = (Cp((N/4)+1) + Cp((N/4)-1))/2;
 
 
 %Plot perfil+ coeficient pressions:
@@ -53,8 +55,9 @@ end
 axis equal;
 xlabel('X');
 ylabel('Z');
-title('Vectors del coeficient de pressió C_p (cap a fora)');
+title('Vectors del coeficient de pressió C_p');
 grid on;
 hold off;
 
 end
+

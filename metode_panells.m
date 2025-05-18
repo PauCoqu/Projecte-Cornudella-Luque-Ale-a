@@ -67,7 +67,7 @@ function [X_c, Z_c, l, Tangent, Normal, gamma, Q_inf, Q_inf_modul, N] = metode_p
     end
 
     % Condició de Kutta (aproximadament 1/2 de la corda)
-    kutta_idx = round(N/2); %
+    kutta_idx = round(N/4); % 
     A(kutta_idx, :) = 0;
     A(kutta_idx, 1) = 1;
     A(kutta_idx, N) = 1;
