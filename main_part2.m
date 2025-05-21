@@ -33,14 +33,14 @@ i_w = deg2rad(0);
 i_h = deg2rad(4); 
 S_v = 2.1;
 rho = 1.225;  %EEEEEEEPPPP
-Re = (rho*Q_inf*c_mitjah)/(1.81e-5) %Podriem comparar amb l'apartat 1
-%Emmagatzemem els coeficients aerodinamics Cl i de moment Cm de l'apartat 1
+Re = (rho*Q_inf*c_mitjah)/(1.81e-5);
 
-%%Rectes Cl vs alpha de cada perfil (de moment de Google)
 
+%Rectes Cl vs alpha de cada perfil
 [Cl_alpha_22112,Cl_alpha_0012, Cl_0_0012, Cl_0_22112] = parametres_perfils ();
 
-[A] = Geometria_avio ();
+%Geometria avió
+%[A] = Geometria_avio ();
 
 
 
