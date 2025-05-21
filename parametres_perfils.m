@@ -1,25 +1,39 @@
-function [Cl_alpha_0012, Cl_alpha_22112, Cl_0_0012, Cl_0_22112] = parametres_perfils ()
+function [Cl_alpha_22112,Cl_alpha_0012, Cl_0_0012, Cl_0_22112] = parametres_perfils ()
 
 % parametres Cl_alpha, Cl_0 i Cm_1/4 de cada peerfil (dee moment de Google per+o s'hauria de treure del nostre treball apartat 1)
-alpha = linspace(0,10,2);
-alpha_rad = deg2rad(alpha_deg);
-
+alpha = [0,1,2,3,4,5,6,7,8,9,10];
+alpha_rad = deg2rad(alpha);
 
 %Parametres NACA 0012 (Canard) --> Perfil simetric (Cl_0 = 0;)
-Cl_0012 = [0,0,0,0,0]; %introduir Cl
-Cm_1I4_0012 = [0,0,0,0,0];
-Cl_0_0012 = Cl_0012(1,1);
+%Cl_0012 = [0, -0.0285, 0.1829, 0.4492, 0.5431, 0.6194, 0.6919, 0.7691]; %Airfool tools (de 0-8º)
+Cl_0012 = [0, 0.1198, 0.2395, 0.3591, 0.4787, 0.5981, 0.7173, 0.8363, 0.9550, 1.0735, 1.1916]; %Nostres valors (de 0-10º)
+Cm_1I4_0012 = [0, -0.0017, -0.0035, -0.0051, -0.0066, -0.0081, 0.0093, -0.0104, -0.0113, -0.0119, -0.0123]; %Nostres valors (de 0-10º)
 
 %Parametres NACA 22112 (Ala)  
-Cl_22112 = [0,0,0,0,0];
-Cm_1I4_22112 = [0,0,0,0,0];
-Cl_0_22112 = Cl_0012(1,1);
+%Cl_22112 = [-0.0329, 0.3280, 0.4460, 0.5233, 0.6058, 0.6908, 0.7685, 0.8397, 0.8556]; %Airfool tools (de 0-8º)
+Cl_22112 = [0.0896, 0.2074 ,0.3252, 0.4429 , 0.5604, 0.6778 , 0.7950, 0.9119 , 1.0285, 1.1449 , 1.2608]; %Nostres valors (de 0-10º)
+Cm_1I4_22112 = [9.5e-4, -5.3067e-4, -0.0020, -0.0035, -0,0049, -0.0062, -0.0074, -0.0084, -0.0093, -0.01, -0.0104]; %Nostres valors (de 0-10º)
 
 
-%Extreiem la pendent Cl_alpha
+%Fem un ployfit; Cl = Cl_0 + Cl_alpha*alpha
+p_0012 = polyfit(alpha, Cl_0012, 1); %p(1) = Cl_alpha ; p(2) = Cl_0;
+p_22112 = polyfit(alpha,Cl_22112,1); %p(1) = Cl_alpha ; p(2) = Cl_0;
+Cl_alpha_22112 = p_22112(1);
+Cl_alpha_0012 = p_0012(1);
+Cl_0_22112 = p_22112(2);
+Cl_0_0012 = p_0012(2);
 
-Cl_alpha_0012 = %....
-Cl_alpha_22112 = %....
+
+plot(alpha, Cl_22112, '-o', 'MarkerSize', 6, 'DisplayName', 'NACA 22112'); 
+hold on;
+plot(alpha, Cl_0012, '-s', 'MarkerSize', 6, 'DisplayName', 'NACA 0012'); 
+
+xlabel('\alpha [º]');
+ylabel('Cl');
+title('Cl vs \alpha');
+grid on;
+legend('Location', 'best');
+hold off;
 
 end
 
