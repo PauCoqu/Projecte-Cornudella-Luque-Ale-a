@@ -37,10 +37,12 @@ Re = (rho*Q_inf*c_mitjah)/(1.81e-5);
 
 
 %Rectes Cl vs alpha de cada perfil
-%[Cl_alpha_22112,Cl_alpha_0012, Cl_0_0012, Cl_0_22112] = parametres_perfils ();
+[Cl_alpha_22112,Cl_alpha_0012, Cl_0_0012, Cl_0_22112] = parametres_perfils ();
 
 %Discretitzem l'ala i el canard, i la coorda en cada punt
 [Coords_ala, Coords_centre_ala, c_ala, Coords_canard, Coords_centre_canard, c_canard] = geometria_avio (N,b,c_r,c_t,N_c,b_h,c_rh,c_th,l_h);
+
+%1)Definir l'angle de twist adequat+distribució sustentació
 
 %Definim un angle de twist=0º i calculem la distribució de lift.
 %Un cop ho tiguem ho grafiquem també per altres angles de twist i el que
