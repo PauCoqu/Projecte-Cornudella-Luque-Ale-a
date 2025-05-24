@@ -18,19 +18,12 @@ Cm_1I4_22112 = [9.5e-4, -5.3067e-4, -0.0020, -0.0035, -0.0049, -0.0062, -0.0074,
 %Fem un ployfit; Cl = Cl_0 + Cl_alpha*alpha
 pCl_0012 = polyfit(alpha_rad, Cl_0012, 1); %p(1) = Cl_alpha ; p(2) = Cl_0;
 pCl_22112 = polyfit(alpha_rad,Cl_22112,1); %p(1) = Cl_alpha ; p(2) = Cl_0;
-pCm_0012 = polyfit(alpha_rad, Cm_1I4_0012, 1); %p(1) = Cm_alpha ; p(2) = Cm_1/4;
-pCm_22112 = polyfit(alpha_rad,Cm_1I4_22112,1); %p(1) = Cm_alpha ; p(2) = Cm_1/4;
 
 %Amb polyval podem saber qualsevol valor del polyfit Cl_05 = ployval(p,0.5);
 Cl_alpha_22112 = pCl_22112(1);
 Cl_alpha_0012 = pCl_0012(1);
 Cl_0_22112 = pCl_22112(2);
 Cl_0_0012 = pCl_0012(2);
-
-Cm_alpha_22112 = pCm_22112(1);
-Cm_alpha_0012 = pCm_0012(1);
-Cm_0_22112 = pCm_22112(2);
-Cm_0_0012 = pCm_0012(2);
 
 Cm_mig_22112 = mean(Cm_1I4_22112);
 Cm_mig_0012 = mean(Cm_1I4_0012);
