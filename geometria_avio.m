@@ -13,7 +13,7 @@ Coords_centre_ala = (Coords_ala(1:end-1, :) + Coords_ala(2:end, :)) / 2;
 %corda = c_r - coord * pendent (y=0 ; c=c_r | y=b/2 ; c=c_h)
 c_ala = c_r - (abs(Coords_centre_ala(:,2))*(c_r-c_t))/(b/2);
 
-%Ara discretitzem el canard
+%Ara discretitzem el canard (CORREGIR!)
 Canard_coords_x = zeros(N_c+1, 1);                 
 Canard_coords_y = linspace(-b_h/2, b_h/2, N_c+1)';
 Canard_coords_z = zeros(N_c+1, 1);
