@@ -62,12 +62,3 @@ R=287;
 
 %[Mach_vector, Q_inf_3, Cl_3, Cl_3_corregit] = apartat3(M_crit, gamma_aire, R, T_inf, rho_aire, gamma, l);
 
-%% CODI PROJECTE PART 2
-%---------------------------------------------
-% Data: 16/05/2025
-% Membres: Antonio Luque, Pau Cornudella i Alex Aleñà
-% Assignatura: AERODINÀMICA, MECÀNICA DE VOL I ORBITAL
-% Grup: 6
-% ---------------------------------------------
-
-

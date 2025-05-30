@@ -1,4 +1,4 @@
-function [Coords_ala, Coords_centre_ala, c_ala, Coords_canard, Coords_centre_canard, c_canard] = geometria_avio (N,b,c_r,c_t,N_c,b_h,c_rh,c_th,l_h)
+function [Coords_ala, Coords_centre_ala, c_ala, Coords_canard, Coords_centre_canard, c_canard] = geometria_avio (N,b,c_r,c_t,b_h,c_rh,c_th,l_h)
 
 % Discretitzem l'ala i el canard en N panells per tal de poder aplicar la teoria de lifting line de Prandtl
 Ala_coords_x = zeros(N+1, 1);                 
@@ -14,9 +14,9 @@ Coords_centre_ala = (Coords_ala(1:end-1, :) + Coords_ala(2:end, :)) / 2;
 c_ala = c_r - (abs(Coords_centre_ala(:,2))*(c_r-c_t))/(b/2);
 
 %Ara discretitzem el canard (CORREGIR!)
-Canard_coords_x = zeros(N_c+1, 1);                 
-Canard_coords_y = linspace(-b_h/2, b_h/2, N_c+1)';
-Canard_coords_z = zeros(N_c+1, 1);
+Canard_coords_x = zeros(N+1, 1);                 
+Canard_coords_y = linspace(-b_h/2, b_h/2, N+1)';
+Canard_coords_z = zeros(N+1, 1);
 Coords_canard = [Canard_coords_x, Canard_coords_y, Canard_coords_z];
 
 % Punts de control

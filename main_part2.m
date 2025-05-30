@@ -7,8 +7,8 @@
 % ---------------------------------------------
 clc; clear; close all;
 
-%Variables ala
 N = 512;
+%Variables ala
 b = 24;
 c_r = 1.8;
 c_t = 1.2;
@@ -17,7 +17,6 @@ c_mitja = (2/3)*c_r*(1+lambda+lambda^2)/(1+lambda);%(pag. 24)
 S = c_mitja*b;
 
 %Variables canard
-N_c = 512; % Number of spanwise segments for the canard
 b_h = 6; 
 c_rh = 1;
 c_th = 0.6;
@@ -40,16 +39,22 @@ Re = (rho*Q_inf*c_mitjah)/(1.81e-5);
 [Cl_alpha_22112,Cl_alpha_0012, Cl_0_0012, Cl_0_22112] = parametres_perfils ();
 
 %Discretitzem l'ala i el canard, i la coorda en cada punt
-[Coords_ala, Coords_centre_ala, c_ala, Coords_canard, Coords_centre_canard, c_canard] = geometria_avio (N,b,c_r,c_t,N_c,b_h,c_rh,c_th,l_h);
+[Coords_ala, Coords_centre_ala, c_ala, Coords_canard, Coords_centre_canard, c_canard] = geometria_avio (N,b,c_r,c_t,b_h,c_rh,c_th,l_h);
 
 %1)Definir l'angle de twist adequat+distribució sustentació
-
 %Definim un angle de twist=0º i calculem la distribució de lift.
 %Un cop ho tiguem ho grafiquem també per altres angles de twist i el que
 %millor distribució de lift doni serà el que triem.
 
+twist_tip = [-10,-8,-6,-4,-2,0,2,4,6,8,10]; %angle de twist a la punta de l'ala
+twist_tip = deg2rad(twist_tip);
+alpha_ala = deg2rad(4); %enunciat
+Ur = [-cos(alpha_ala); 0; sin(alpha_ala)]; %WTF???
 
-
+for i  = 1: length(twist_tip)
+[twist_centre_panell] = calcul_twist(twist_tip(i), N);
+[gama_centre_panell] = calcul_gama(twist_centre_panell(i), N);
+end
 
 
 
