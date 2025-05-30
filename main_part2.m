@@ -26,11 +26,12 @@ c_mitjah = (2/3)*c_rh*(1+lambda_h+lambda_h^2)/(1+lambda_h);%(pag. 24)
 S_h = c_mitjah*b_h;
 
 %Variables VTP
-Q_inf = 1;
 Cd_VTP = 0.0062;
+S_v = 2.1;
+
+Q_inf = 1;
 i_w = deg2rad(0);
 i_h = deg2rad(4); 
-S_v = 2.1;
 rho = 1.225;  %EEEEEEEPPPP
 Re = (rho*Q_inf*c_mitjah)/(1.81e-5);
 
@@ -53,7 +54,7 @@ Ur = [-cos(alpha_ala); 0; sin(alpha_ala)]; %WTF???
 
 for i  = 1: length(twist_tip)
 [twist_centre_panell] = calcul_twist(twist_tip(i), N);
-[gama_centre_panell] = calcul_gama(twist_centre_panell(i), N);
+[gama_centre_panell] = calcul_gama(alpha_ala, N,Coords_ala);
 end
 
 
