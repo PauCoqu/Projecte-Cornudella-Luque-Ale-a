@@ -54,7 +54,7 @@ Ur = [-cos(alpha_ala); 0; sin(alpha_ala)]; %WTF???
 
 for i  = 1: length(twist_tip)
 [twist_centre_panell] = calcul_twist(twist_tip(i), N);
-[gama_centre_panell] = calcul_gama(alpha_ala, N,Coords_ala);
+[gama_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_22112, Cl_alpha_22112, N, Coords_centre_ala, Coords_ala, i_w,Q_inf,twist_centre_panell);
 end
 
 
