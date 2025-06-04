@@ -28,29 +28,29 @@ Cl_0_0012 = pCl_0012(2);
 Cm_mig_22112 = mean(Cm_1I4_22112);
 Cm_mig_0012 = mean(Cm_1I4_0012);
 
-figure
-plot(alpha_rad, Cl_22112, '-o', 'MarkerSize', 6, 'DisplayName', 'NACA 22112'); 
-hold on;
-plot(alpha_rad, Cl_0012, '-s', 'MarkerSize', 6, 'DisplayName', 'NACA 0012'); 
-xlabel('\alpha [rad]');
-ylabel('C_l');
-title('C_l vs \alpha');
-grid on;
-legend('Location', 'best');
-hold off;
+% figure
+% plot(alpha_rad, Cl_22112, '-o', 'MarkerSize', 6, 'DisplayName', 'NACA 22112'); 
+% hold on;
+% plot(alpha_rad, Cl_0012, '-s', 'MarkerSize', 6, 'DisplayName', 'NACA 0012'); 
+% xlabel('\alpha [rad]');
+% ylabel('C_l');
+% title('C_l vs \alpha');
+% grid on;
+% legend('Location', 'best');
+% hold off;
 
-figure
-plot(alpha_rad, Cm_1I4_22112, '-o', 'MarkerSize', 6, 'DisplayName', 'NACA 22112'); 
-hold on;
-plot(alpha_rad, Cm_1I4_0012, '-s', 'MarkerSize', 6, 'DisplayName', 'NACA 0012'); 
-yline(Cm_mig_22112, '--', 'Color', [0, 0.5, 0], 'LineWidth', 2, 'DisplayName', 'C_{m_{mig}} 22112'); 
-yline(Cm_mig_0012, ':', 'Color', [0.7, 0, 0], 'LineWidth', 2, 'DisplayName', 'C_{m_{mig}} 0012');
-xlabel('\alpha [rad]');
-ylabel('C_{m_{1/4}}');
-title('C_{m_{1/4}} vs \alpha');
-grid on;
-legend('Location', 'best');
-hold off;
+% figure
+% plot(alpha_rad, Cm_1I4_22112, '-o', 'MarkerSize', 6, 'DisplayName', 'NACA 22112'); 
+% hold on;
+% plot(alpha_rad, Cm_1I4_0012, '-s', 'MarkerSize', 6, 'DisplayName', 'NACA 0012'); 
+% yline(Cm_mig_22112, '--', 'Color', [0, 0.5, 0], 'LineWidth', 2, 'DisplayName', 'C_{m_{mig}} 22112'); 
+% yline(Cm_mig_0012, ':', 'Color', [0.7, 0, 0], 'LineWidth', 2, 'DisplayName', 'C_{m_{mig}} 0012');
+% xlabel('\alpha [rad]');
+% ylabel('C_{m_{1/4}}');
+% title('C_{m_{1/4}} vs \alpha');
+% grid on;
+% legend('Location', 'best');
+% hold off;
 
 end
 

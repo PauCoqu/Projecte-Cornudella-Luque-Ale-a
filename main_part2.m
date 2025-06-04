@@ -50,7 +50,6 @@ Re = (rho*Q_inf*c_mitjah)/(1.81e-5);
 twist_tip = [-10,-8,-6,-4,-2,0,2,4,6,8,10]; %angle de twist a la punta de l'ala
 twist_tip = deg2rad(twist_tip);
 alpha_ala = deg2rad(4); %enunciat
-Ur = [-cos(alpha_ala); 0; sin(alpha_ala)]; %WTF???
 
 for i  = 1: length(twist_tip)
 [twist_centre_panell] = calcul_twist(twist_tip(i), N);

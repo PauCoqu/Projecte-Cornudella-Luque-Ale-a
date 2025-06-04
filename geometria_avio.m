@@ -26,15 +26,4 @@ Coords_centre_canard = (Coords_canard(1:end-1, :) + Coords_canard(2:end, :)) / 2
 %corda = c_r - coord * pendent (y=0 ; c=c_r | y=b/2 ; c=c_h)
 c_canard = c_r - (abs(Coords_centre_canard(:,2))*(c_rh-c_th))/(b_h/2);
 
-
-
-
-
-
-
-
-
-
-
-
 end
