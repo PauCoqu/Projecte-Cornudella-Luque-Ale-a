@@ -18,7 +18,7 @@ b_i(i) = (1/2)*c_ala(i)*Q_inf*(Cl_0_ala + Cl_alpha_ala*(alpha_ala + i_ala + twis
 
     for j = 1:N
         if j == i %cas vortex autoinduit  
-            %Per cada panell calculem la velocitat del vortex autoinduit (V_ij = VinfA + V_AB - V_infB)
+           %Per cada panell calculem la velocitat del vortex autoinduit (V_ij = VinfA + V_AB - V_infB)
             r1 = (Coords_centre_ala(i,:) - Coords_ala(j,:))'; %(pag 9)
             r2 = (Coords_centre_ala(i,:) - Coords_ala(j+1,:))'; %(pag 9)
             u_r = [-cos(alpha_ala); 0; sin(alpha_ala)]; %vector unitari de la velocitat incident
@@ -27,10 +27,10 @@ b_i(i) = (1/2)*c_ala(i)*Q_inf*(Cl_0_ala + Cl_alpha_ala*(alpha_ala + i_ala + twis
             V_infA = 1/(4*pi)*(1-dot(u_r,u_r1))/(norm(cross(u_r,r1))).^2 *cross(u_r,r1); %(pag 10)
             V_infB = 1/(4*pi)*(1-dot(u_r,u_r2))/(norm(cross(u_r,r2))).^2 *cross(u_r,r2); %(pag 10)
             %V_AB = (1/(4*pi))*(norm(r1)+norm(r2))/(norm(r1)*norm(r2)*(norm(r1)*norm(r2) + dot(r1,r2)))*cross(r1,r2); %(pag 9) hauria de donar 0 en aquest cas
-            V_ij = V_infA - V_infB; %(pag 11)    
+            V_ij = V_infA + V_infB; %(pag 11)    
             a_ij(i, j) = (-1/2)*Cl_alpha_ala*c_ala(i)*dot(V_ij, Referencia_k) + 1; %(pag 19)
         else
-            % Per cada panell calculem la velocitat del vortex (V_ij = VinfA + V_AB - V_infB)
+           % Per cada panell calculem la velocitat del vortex (V_ij = VinfA + V_AB - V_infB)
             r1 = (Coords_centre_ala(i,:) - Coords_ala(j,:))'; %(pag 9)
             r2 = (Coords_centre_ala(i,:) - Coords_ala(j+1,:))'; %(pag 9)
             u_r = [-cos(alpha_ala); 0; sin(alpha_ala)]; %vector unitari de la velocitat incident
