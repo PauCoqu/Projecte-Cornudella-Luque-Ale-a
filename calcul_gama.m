@@ -27,7 +27,7 @@ b_i(i) = (1/2)*c_ala(i)*Q_inf*(Cl_0_ala + Cl_alpha_ala*(alpha_ala + i_ala + twis
             V_infA = 1/(4*pi)*(1-dot(u_r,u_r1))/(norm(cross(u_r,r1))).^2 *cross(u_r,r1); %(pag 10)
             V_infB = 1/(4*pi)*(1-dot(u_r,u_r2))/(norm(cross(u_r,r2))).^2 *cross(u_r,r2); %(pag 10)
             %V_AB = (1/(4*pi))*(norm(r1)+norm(r2))/(norm(r1)*norm(r2)*(norm(r1)*norm(r2) + dot(r1,r2)))*cross(r1,r2); %(pag 9) hauria de donar 0 en aquest cas
-            V_ij = V_infA + V_infB; %(pag 11)    
+            V_ij = V_infA - V_infB; %(pag 11)    
             a_ij(i, j) = (-1/2)*Cl_alpha_ala*c_ala(i)*dot(V_ij, Referencia_k) + 1; %(pag 19)
         else
            % Per cada panell calculem la velocitat del vortex (V_ij = VinfA + V_AB - V_infB)
@@ -40,7 +40,7 @@ b_i(i) = (1/2)*c_ala(i)*Q_inf*(Cl_0_ala + Cl_alpha_ala*(alpha_ala + i_ala + twis
             V_infB = 1/(4*pi)*(1-dot(u_r,u_r2))/(norm(cross(u_r,r2)))^2 *cross(u_r,r2); %(pag 10)
             V_AB = (1/(4*pi))*(norm(r1)+norm(r2))/(norm(r1)*norm(r2)*(norm(r1)*norm(r2) + dot(r1,r2)))*cross(r1,r2); %(pag 9) hauria de donar 0 en aquest cas
             V_ij = V_infA + V_AB - V_infB; %(pag 11)    
-            a_ij(i, j) = (-1/2)*Cl_alpha_ala*c_ala(i)*dot(V_ij, Referencia_k) + 1; %(pag 19) 
+            a_ij(i, j) = (-1/2)*Cl_alpha_ala*c_ala(i)*dot(V_ij, Referencia_k); %(pag 19) 
         end
     end
 end

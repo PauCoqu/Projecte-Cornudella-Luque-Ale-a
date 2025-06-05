@@ -10,7 +10,7 @@ Coords_ala = [Ala_coords_x, Ala_coords_y, Ala_coords_z];
 Coords_centre_panell = (Coords_ala(1:end-1, :) + Coords_ala(2:end, :)) / 2;
 
 % Formula d'evolució de la corda considerant ala trapezoidal (varia en l'eix Y)
-%corda = c_r - coord * pendent (y=0 ; c=c_r | y=b/2 ; c=c_h)
+%corda = c_r - coord * pendent (y=0 ; c=c_r | y=b/2 ; c=c_t)
 c_ala = c_r - (abs(Coords_centre_panell(:,2))*(c_r-c_t))/(b/2);
 
 %Ara discretitzem el canard (CORREGIR!)
@@ -24,6 +24,6 @@ Coords_centre_canard = (Coords_canard(1:end-1, :) + Coords_canard(2:end, :)) / 2
 
 % Formula evolució corda considerant ala trapezoidal (varia en l'eix Y)
 %corda = c_r - coord * pendent (y=0 ; c=c_r | y=b/2 ; c=c_h)
-c_canard = c_r - (abs(Coords_centre_canard(:,2))*(c_rh-c_th))/(b_h/2);
+c_canard = c_rh - (abs(Coords_centre_canard(:,2))*(c_rh-c_th))/(b_h/2);
 
 end
