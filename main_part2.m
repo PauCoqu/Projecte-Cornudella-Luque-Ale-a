@@ -51,10 +51,20 @@ twist_tip = [-10,-8,-6,-4,-2,0,2,4,6,8,10]; %angle de twist a la punta de l'ala
 twist_tip = deg2rad(twist_tip);
 alpha_ala = deg2rad(4); %enunciat
 
+
+CL_ala_ap1 = zeros(N, size(twist_tip));
+Cl_pan_ap1 = zeros(N, size(twist_tip));
+alpha_ind_ap1 = zeros(N, length(twist_tip));
+Cd_visc_pan_ap1 = zeros(N, length(twist_tip));
+Cd_ind_ap1 = zeros(N, length(twist_tip));
+CD_ap1 = zeros(size(twist_tip));
+Eff_ap1 = zeros(size(twist_tip));
+Lift_ap1 = zeros(size(twist_tip));
+
 for i  = 1: length(twist_tip)
 [twist_centre_panell] = calcul_twist(twist_tip(i), N);
 [gamma_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_22112, Cl_alpha_22112, N, Coords_centre_ala, Coords_ala, i_w,Q_inf,twist_centre_panell);
-[CL, Cl_pan, alpha_ind, Cd_visc_pan, Cd_ind, CD, Eff, Lift] = .... 
+[CL_ala_ap1, Cl_pan_ap1, alpha_ind_ap1, Cd_visc_pan_ap1, Cd_ind_ap1, CD_ap1, Eff_ap1, Lift_ap1] = .... 
     calcul_coeff(N, gamma_centre_panell, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell, Coords_ala, rho, Q_inf, S, c_ala, "ala");
 end
 
