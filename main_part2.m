@@ -8,6 +8,7 @@
 clc; clear; close all;
 
 N = 512;
+
 %Variables ala
 b = 24;
 c_r = 1.8;
@@ -29,12 +30,14 @@ S_h = c_mitjah*b_h;
 Cd_VTP = 0.0062;
 S_v = 2.1;
 
+%Altres variables
 Q_inf = 1;
 i_w = deg2rad(0);
 i_h = deg2rad(4); 
-rho = 1.225;  %EEEEEEEPPPP
+rho = 1.225; 
 Re = (rho*Q_inf*c_mitjah)/(1.81e-5);
 
+%%
 
 %Rectes Cl vs alpha de cada perfil
 [Cl_alpha_22112,Cl_alpha_0012, Cl_0_0012, Cl_0_22112] = parametres_perfils ();
@@ -52,21 +55,49 @@ twist_tip = deg2rad(twist_tip);
 alpha_ala = deg2rad(4); %enunciat
 
 
+% Inicialització de les matrius per emmagatzemar els resultats
 CL_ala_ap1 = zeros(N, length(twist_tip));
 Cl_pan_ap1 = zeros(N, length(twist_tip));
 alpha_ind_ap1 = zeros(N, length(twist_tip));
 Cd_visc_pan_ap1 = zeros(N, length(twist_tip));
 Cd_ind_ap1 = zeros(N, length(twist_tip));
-CD_ap1 = zeros(size(twist_tip));
-Eff_ap1 = zeros(size(twist_tip));
-Lift_ap1 = zeros(size(twist_tip));
+CD_ap1 = zeros(length(twist_tip), 1); % vector per a CD
+Eff_ap1 = zeros(length(twist_tip), 1); % vector per a Eff
+Lift_ap1 = zeros(length(twist_tip), 1); % vector per a Lift
 
-for i  = 1: length(twist_tip)
-[twist_centre_panell] = calcul_twist(twist_tip(i), N);
-[gamma_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_22112, Cl_alpha_22112, N, Coords_centre_ala, Coords_ala, i_w,Q_inf,twist_centre_panell);
-[CL_ala_ap1, Cl_pan_ap1, alpha_ind_ap1, Cd_visc_pan_ap1, Cd_ind_ap1, CD_ap1, Eff_ap1, Lift_ap1] = .... 
-    calcul_coef(N, gamma_centre_panell, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell, Coords_ala, rho, Q_inf, S, c_ala, "ala");
+% Bucle per recórrer cada valor de twist_tip
+for i = 1:length(twist_tip)
+    % Càlculs per a cada iteració
+    [twist_centre_panell] = calcul_twist(twist_tip(i), N);
+    [gamma_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_22112, Cl_alpha_22112, N, Coords_centre_ala, Coords_ala, i_w, Q_inf, twist_centre_panell);
+    [CL_ala_ap1(:, i), Cl_pan_ap1(:, i), alpha_ind_ap1(:, i), Cd_visc_pan_ap1(:, i), Cd_ind_ap1(:, i), CD_ap1(i), Eff_ap1(i), Lift_ap1(i)] = calcul_coef(N, gamma_centre_panell, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell, Coords_ala, rho, Q_inf, S, c_ala, "ala");
 end
 
+
+%% GRAFICS
+
+figure;
+spanwise_pos = Coords_centre_ala(:, 2);
+hold on;
+
+for i = 1:length(twist_tip)
+    
+    % Dibuixar la línia amb línies més gruixudes
+    plot(spanwise_pos, Cl_pan_ap1(:, i), 'LineWidth', 2, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
+end
+
+title('Distribució Spanwise de Coeficients de Sustentació (C_L) per diferents Angles de Twist');
+xlabel('Posició Spanwise (m)');
+ylabel('Coeficient de Sustentació (C_L)');
+
+% Afegir una llegenda
+legend('show', 'Interpreter', 'latex');
+
+% Millorar la graella i els límits
+grid on;
+xlim([min(spanwise_pos), max(spanwise_pos)]);
+ylim([min(Cl_pan_ap1(:)), max(Cl_pan_ap1(:))]);
+
+hold off;
 
 
