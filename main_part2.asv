@@ -53,9 +53,8 @@ alpha_ala = deg2rad(4); %enunciat
 
 for i  = 1: length(twist_tip)
 [twist_centre_panell] = calcul_twist(twist_tip(i), N);
-[gamma_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_22112, Cl_alpha_22112, N, Coords_centre_ala, Coords_ala, i_w,Q_inf,twist_centre_panell);
-[CL, Cl_pan, alpha_ind, Cd_visc_pan, Cd_ind, CD, Eff, Lift] = .... 
-    calcul_coeff(N, gamma_centre_panell, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell, Coords_ala, rho, Q_inf, S, c_ala, "ala");
+[gama_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_22112, Cl_alpha_22112, N, Coords_centre_ala, Coords_ala, i_w,Q_inf,twist_centre_panell);
+
 end
 
 
