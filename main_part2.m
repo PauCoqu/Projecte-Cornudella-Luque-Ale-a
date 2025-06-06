@@ -52,8 +52,8 @@ twist_tip = deg2rad(twist_tip);
 alpha_ala = deg2rad(4); %enunciat
 
 
-CL_ala_ap1 = zeros(N, size(twist_tip));
-Cl_pan_ap1 = zeros(N, size(twist_tip));
+CL_ala_ap1 = zeros(N, length(twist_tip));
+Cl_pan_ap1 = zeros(N, length(twist_tip));
 alpha_ind_ap1 = zeros(N, length(twist_tip));
 Cd_visc_pan_ap1 = zeros(N, length(twist_tip));
 Cd_ind_ap1 = zeros(N, length(twist_tip));
