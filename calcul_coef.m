@@ -1,5 +1,5 @@
 function [CL, Cl_pan, alpha_ind, Cd_visc_pan, Cd_ind, CD, Eff, Lift] = .... 
-    calcul_coeff(N, gamma_centre_panell, alpha, Cl_alpha, Cl_0, incid, twist, Coords, rho, Q_inf, S, c, component)
+    calcul_coef(N, gamma_centre_panell, alpha, Cl_alpha, Cl_0, incid, twist, Coords, rho, Q_inf, S, c, component)
 
 circ_pan = zeros(N,1);
 Cl_pan = zeros(N,1);

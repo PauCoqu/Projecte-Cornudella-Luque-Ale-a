@@ -65,7 +65,7 @@ for i  = 1: length(twist_tip)
 [twist_centre_panell] = calcul_twist(twist_tip(i), N);
 [gamma_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_22112, Cl_alpha_22112, N, Coords_centre_ala, Coords_ala, i_w,Q_inf,twist_centre_panell);
 [CL_ala_ap1, Cl_pan_ap1, alpha_ind_ap1, Cd_visc_pan_ap1, Cd_ind_ap1, CD_ap1, Eff_ap1, Lift_ap1] = .... 
-    calcul_coeff(N, gamma_centre_panell, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell, Coords_ala, rho, Q_inf, S, c_ala, "ala");
+    calcul_coef(N, gamma_centre_panell, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell, Coords_ala, rho, Q_inf, S, c_ala, "ala");
 end
 
 
