@@ -61,6 +61,7 @@ Cl_pan_ap1 = zeros(N, length(twist_tip));
 alpha_ind_ap1 = zeros(N, length(twist_tip));
 Cd_visc_pan_ap1 = zeros(N, length(twist_tip));
 Cd_ind_ap1 = zeros(N, length(twist_tip));
+Cd_tot = zeros(N, length(twist_tip));
 CD_ap1 = zeros(length(twist_tip), 1); % vector per a CD
 Eff_ap1 = zeros(length(twist_tip), 1); % vector per a Eff
 Lift_ap1 = zeros(length(twist_tip), 1); % vector per a Lift
@@ -70,34 +71,42 @@ for i = 1:length(twist_tip)
     % Càlculs per a cada iteració
     [twist_centre_panell] = calcul_twist(twist_tip(i), N);
     [gamma_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_22112, Cl_alpha_22112, N, Coords_centre_ala, Coords_ala, i_w, Q_inf, twist_centre_panell);
-    [CL_ala_ap1(:, i), Cl_pan_ap1(:, i), alpha_ind_ap1(:, i), Cd_visc_pan_ap1(:, i), Cd_ind_ap1(:, i), CD_ap1(i), Eff_ap1(i), Lift_ap1(i)] = calcul_coef(N, gamma_centre_panell, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell, Coords_ala, rho, Q_inf, S, c_ala, "ala");
+    [CL_ala_ap1(:, i), Cl_pan_ap1(:, i), alpha_ind_ap1(:, i), Cd_visc_pan_ap1(:, i), Cd_ind_ap1(:, i),Cd_tot(:, i), CD_ap1(i), Eff_ap1(i), Lift_ap1(i)] = calcul_coef(N, gamma_centre_panell, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell, Coords_ala, rho, Q_inf, S, c_ala, "ala");
 end
 
 
 %% GRAFICS
 
+%1) Cl front spanwise
 figure;
 spanwise_pos = Coords_centre_ala(:, 2);
 hold on;
-
 for i = 1:length(twist_tip)
-    
-    % Dibuixar la línia amb línies més gruixudes
-    plot(spanwise_pos, Cl_pan_ap1(:, i), 'LineWidth', 2, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
+    plot(spanwise_pos, Cl_pan_ap1(:, i), 'LineWidth', 1.5, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
 end
 
 title('Distribució Spanwise de Coeficients de Sustentació (C_L) per diferents Angles de Twist');
 xlabel('Posició Spanwise (m)');
 ylabel('Coeficient de Sustentació (C_L)');
-
-% Afegir una llegenda
 legend('show', 'Interpreter', 'latex');
-
-% Millorar la graella i els límits
 grid on;
 xlim([min(spanwise_pos), max(spanwise_pos)]);
 ylim([min(Cl_pan_ap1(:)), max(Cl_pan_ap1(:))]);
-
 hold off;
 
 
+%2) Cd front spanwise
+figure;
+hold on;
+for i = 1:length(twist_tip)
+    plot(spanwise_pos, Cd_tot(:, i), 'LineWidth', 1.5, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
+end
+
+title('Distribució Spanwise de Coeficients de Resistència Aerodinàmica (C_D) per diferents Angles de Twist');
+xlabel('Posició Spanwise (m)');
+ylabel('Coeficient de Resistència Aerodinàmica (C_D)');
+legend('show', 'Interpreter', 'latex');
+grid on;
+xlim([min(spanwise_pos), max(spanwise_pos)]);
+ylim([min(Cd_tot(:)), max(Cd_tot(:))]);
+hold off;
