@@ -1,4 +1,4 @@
-function [gamma_ala, gamma_can, A, b] = gamma_ala_can(alpha, incid_a, incid_can, Q_inf, N, Coords_a, Coords_c_a, c_a, twist_a, ...
+function [gamma, A, b] = gamma_ala_can(alpha, incid_a, incid_can, Q_inf, N, Coords_a, Coords_c_a, c_a, twist_a, ...
     Cl_alpha_22112, Cl_0_22112, Coords_can, Coords_c_can, c_can, Cl_alpha_0012, Cl_0_0012, u_r)
 
 Na=N;
@@ -71,4 +71,4 @@ b = [b_11;b_22];
 gamma=A\b;
 
 gamma_ala=gamma(1:N,1);
-gamma_can=gamma(N:end,1);
+gamma_can=gamma(1:N,1);

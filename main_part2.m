@@ -10,12 +10,12 @@ clc; clear; close all;
 N = 512;
 
 %Variables ala
-b = 24;
+b_a = 24;
 c_r = 1.8;
 c_t = 1.2;
 lambda = c_t/c_r; %(pag. 24)
 c_mitja = (2/3)*c_r*(1+lambda+lambda^2)/(1+lambda);%(pag. 24)
-S = c_mitja*b;
+S = c_mitja*b_a;
 
 %Variables canard
 b_h = 6; 
@@ -33,7 +33,7 @@ S_v = 2.1;
 %Altres variables
 Q_inf = 1;
 i_w = deg2rad(0);
-i_h = deg2rad(4); 
+i_h = deg2rad(3); 
 rho = 1.225; 
 Re = (rho*Q_inf*c_mitjah)/(1.81e-5);
 
@@ -43,7 +43,7 @@ Re = (rho*Q_inf*c_mitjah)/(1.81e-5);
 [Cl_alpha_22112,Cl_alpha_0012, Cl_0_0012, Cl_0_22112] = parametres_perfils ();
 
 %Discretitzem l'ala i el canard, i la coorda en cada punt
-[Coords_ala, Coords_centre_ala, c_ala, Coords_canard, Coords_centre_canard, c_canard] = geometria_avio (N,b,c_r,c_t,b_h,c_rh,c_th,l_h);
+[Coords_ala, Coords_centre_ala, c_ala, Coords_canard, Coords_centre_canard, c_canard] = geometria_avio (N,b_a,c_r,c_t,b_h,c_rh,c_th,l_h);
 
 %1)Definir l'angle de twist adequat+distribució sustentació
 %Definim un angle de twist=0º i calculem la distribució de lift.
@@ -57,7 +57,7 @@ alpha_ala = deg2rad(4); %enunciat
 
 % Inicialització de les matrius per emmagatzemar els resultats
 CL_ala_ap1 = zeros(1, length(twist_tip));
-Cl_pan_ap1 = zeros(N, length(twist_tip));
+CL_pan_ap1 = zeros(N, length(twist_tip));
 alpha_ind_ap1 = zeros(N, length(twist_tip));
 Cd_visc_pan_ap1 = zeros(N, length(twist_tip));
 Cd_ind_ap1 = zeros(N, length(twist_tip));
@@ -73,7 +73,7 @@ for i = 1:length(twist_tip)
     % Càlculs per a cada iteració
     [twist_centre_panell] = calcul_twist(twist_tip(i), N);
     [gamma_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_22112, Cl_alpha_22112, N, Coords_centre_ala, Coords_ala, i_w, Q_inf, twist_centre_panell, u_r);
-    [CL_ala_ap1(i), Cl_pan_ap1(:, i), alpha_ind_ap1(:, i), Cd_visc_pan_ap1(:, i), Cd_ind_ap1(:, i),Cd_tot(:, i), CD_ap1(i), Eff_ap1(i), Lift_ap1(i)] = calcul_coef(N, gamma_centre_panell, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell, Coords_ala, rho, Q_inf, S, c_ala, "ala");
+    [CL_ala_ap1(i), CL_pan_ap1(:, i), alpha_ind_ap1(:, i), Cd_visc_pan_ap1(:, i), Cd_ind_ap1(:, i),Cd_tot(:, i), CD_ap1(i), Eff_ap1(i), Lift_ap1(i)] = calcul_coef(N, gamma_centre_panell, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell, Coords_ala, rho, Q_inf, S, c_ala, "ala");
 end
 
 [eff_max, filaMax] = max(Eff_ap1);
@@ -87,7 +87,7 @@ figure;
 spanwise_pos = Coords_centre_ala(:, 2);
 hold on;
 for i = 1:length(twist_tip)
-    plot(spanwise_pos, Cl_pan_ap1(:, i), 'LineWidth', 1.5, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
+    plot(spanwise_pos, CL_pan_ap1(:, i), 'LineWidth', 1.5, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
 end
 
 title('Distribució al llarg del span dels coeficients de sustentació (C_L) per diferents angles de twist');
@@ -96,7 +96,7 @@ ylabel('Coeficient de Sustentació (C_L)');
 legend('show', 'Interpreter', 'latex');
 grid on;
 xlim([min(spanwise_pos), max(spanwise_pos)]);
-ylim([min(Cl_pan_ap1(:)), max(Cl_pan_ap1(:))]);
+ylim([min(CL_pan_ap1(:)), max(CL_pan_ap1(:))]);
 hold off;
 
 
@@ -169,7 +169,21 @@ hold off;
 Twist_ala = twist_tip(filaMax);
 Twist_flap = 0;
 [twist_centre_panell_actualitzat] = calcul_twist(Twist_ala, N);
-alpha_total = deg2rad(4);
 
-[gamma, A, b] = gamma_ala_can(alpha_ala, i_w, i_h, Q_inf, N, Coords_ala, Coords_centre_ala, c_ala, twist_centre_panell_actualitzat, ...
+[gamma_ala, gamma_can, A, b] = gamma_ala_can(alpha_ala, i_w, i_h, Q_inf, N, Coords_ala, Coords_centre_ala, c_ala, twist_centre_panell_actualitzat, ...
     Cl_alpha_22112, Cl_0_22112, Coords_canard, Coords_centre_canard, c_canard, Cl_alpha_0012, Cl_0_0012, u_r);
+
+[CL_ala, CL_panala, alpha_ind_ala, Cd_visc_panala, Cd_ind_ala, Cd_tot_ala, CD_ala, Eff_ala, Lift_ala] = ...
+    calcul_coef(N, gamma_ala, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, Twist_ala, Coords_ala, rho, Q_inf, S, c_ala, "ala");
+
+[CL_can, Cl_pancan, alpha_ind_can, Cd_visc_pancan, Cd_ind_can, Cd_tot_can, CD_can, Eff_can, Lift_can] = ...
+    calcul_coef(N, gamma_can, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, Twist_ala, Coords_ala, rho, Q_inf, S, c_ala, "ala");
+
+
+
+
+long_a=Coords_ala(1,round(N+1/2));
+
+dist_c=abs(Coords_canard(1,round(N+1/2)));
+
+dist=(Lift_ala*dist_w+Lift_can*dist_c)/(L_wing+L_canard);
