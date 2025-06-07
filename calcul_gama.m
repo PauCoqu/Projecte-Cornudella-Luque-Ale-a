@@ -1,4 +1,4 @@
-function [gama_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_ala, Cl_alpha_ala, N, Coords_centre_ala, Coords_ala, i_ala,Q_inf,twist)
+function [gama_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_ala, Cl_alpha_ala, N, Coords_centre_ala, Coords_ala, i_ala,Q_inf,twist, u_r)
  
 %c_ala(i) = corda ala o canard (c_ala, c_canard....)
 %alpha_ala = angle ala o canard (alpha_ala, .....)
@@ -21,7 +21,6 @@ b_i(i) = (1/2)*c_ala(i)*Q_inf*(Cl_0_ala + Cl_alpha_ala*(alpha_ala + i_ala + twis
            %Per cada panell calculem la velocitat del vortex autoinduit (V_ij = VinfA + V_AB - V_infB)
             r1 = (Coords_centre_ala(i,:) - Coords_ala(j,:))'; %(pag 9)
             r2 = (Coords_centre_ala(i,:) - Coords_ala(j+1,:))'; %(pag 9)
-            u_r = [-cos(alpha_ala); 0; sin(alpha_ala)]; %vector unitari de la velocitat incident
             u_r1 = r1/norm(r1); %vector unitari u_r1
             u_r2 = r2/norm(r2); %vector unitari u_r1
             V_infA = 1/(4*pi)*(1-dot(u_r,u_r1))/(norm(cross(u_r,r1))).^2 *cross(u_r,r1); %(pag 10)

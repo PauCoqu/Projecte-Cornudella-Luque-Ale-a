@@ -23,7 +23,7 @@ for i=1:N
     if component=="ala"
         Cd_visc=0.0080*Cl_pan(i)^2 - 0.0013*Cl_pan(i) + 0.0063; %enunciat (ala)
     else
-        Cd_visc=0.0052*Cl_pan(i) + 0.0071; %enunciat (canard)
+        Cd_visc=0.0052*Cl_pan(i)^2 + 0.0071; %enunciat (canard)
     end
     Cd_visc_pan(i) = (Cd_visc*c(i)*Delta_y)/S;
     Cd_tot(i) = Cd_visc_pan(i) + Cd_ind(i); %Cd total

@@ -56,37 +56,42 @@ alpha_ala = deg2rad(4); %enunciat
 
 
 % Inicialització de les matrius per emmagatzemar els resultats
-CL_ala_ap1 = zeros(N, length(twist_tip));
+CL_ala_ap1 = zeros(1, length(twist_tip));
 Cl_pan_ap1 = zeros(N, length(twist_tip));
 alpha_ind_ap1 = zeros(N, length(twist_tip));
 Cd_visc_pan_ap1 = zeros(N, length(twist_tip));
 Cd_ind_ap1 = zeros(N, length(twist_tip));
-CD_ap1 = zeros(length(twist_tip), 1); % vector per a CD
-Eff_ap1 = zeros(length(twist_tip), 1); % vector per a Eff
-Lift_ap1 = zeros(length(twist_tip), 1); % vector per a Lift
+Cd_tot = zeros(N, length(twist_tip));
+CD_ap1 = zeros(1, length(twist_tip)); % vector per a CD
+Eff_ap1 = zeros(1, length(twist_tip)); % vector per a Eff
+Lift_ap1 = zeros(1, length(twist_tip)); % vector per a Lift
+
+u_r = [-cos(alpha_ala); 0; sin(alpha_ala)]; %vector unitari de la velocitat incident
 
 % Bucle per recórrer cada valor de twist_tip
 for i = 1:length(twist_tip)
     % Càlculs per a cada iteració
     [twist_centre_panell] = calcul_twist(twist_tip(i), N);
-    [gamma_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_22112, Cl_alpha_22112, N, Coords_centre_ala, Coords_ala, i_w, Q_inf, twist_centre_panell);
-    [CL_ala_ap1(:, i), Cl_pan_ap1(:, i), alpha_ind_ap1(:, i), Cd_visc_pan_ap1(:, i), Cd_ind_ap1(:, i), CD_ap1(i), Eff_ap1(i), Lift_ap1(i)] = calcul_coef(N, gamma_centre_panell, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell, Coords_ala, rho, Q_inf, S, c_ala, "ala");
+    [gamma_centre_panell] = calcul_gama(c_ala, alpha_ala, Cl_0_22112, Cl_alpha_22112, N, Coords_centre_ala, Coords_ala, i_w, Q_inf, twist_centre_panell, u_r);
+    [CL_ala_ap1(i), Cl_pan_ap1(:, i), alpha_ind_ap1(:, i), Cd_visc_pan_ap1(:, i), Cd_ind_ap1(:, i),Cd_tot(:, i), CD_ap1(i), Eff_ap1(i), Lift_ap1(i)] = calcul_coef(N, gamma_centre_panell, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell, Coords_ala, rho, Q_inf, S, c_ala, "ala");
 end
+
+[eff_max, filaMax] = max(Eff_ap1);
+fprintf('El valor de màxima eficiència de twisting és %g i es troba a un valor de %d\n graus de twist', eff_max, twist_tip(filaMax));
 
 
 %% GRAFICS
 
-%Cl front spanwise
+%1) CL al llarg de l'ala (span) per diferents angles de twist
 figure;
 spanwise_pos = Coords_centre_ala(:, 2);
 hold on;
 for i = 1:length(twist_tip)
-    % Dibuixar la línia amb línies més gruixudes
     plot(spanwise_pos, Cl_pan_ap1(:, i), 'LineWidth', 1.5, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
 end
 
-title('Distribució Spanwise de Coeficients de Sustentació (C_L) per diferents Angles de Twist');
-xlabel('Posició Spanwise (m)');
+title('Distribució al llarg del span dels coeficients de sustentació (C_L) per diferents angles de twist');
+xlabel('Posició en l''eix de span (m)');
 ylabel('Coeficient de Sustentació (C_L)');
 legend('show', 'Interpreter', 'latex');
 grid on;
@@ -95,29 +100,76 @@ ylim([min(Cl_pan_ap1(:)), max(Cl_pan_ap1(:))]);
 hold off;
 
 
-%Cd front spanwise
+%2) CD al llarg de l'ala (span) per diferents angles de twist
 figure;
 hold on;
-
-% Afegeix una línia per a cada iteració de twist_tip
 for i = 1:length(twist_tip)
-    % Convertir el twist de radians a graus
-    twist_degrees = twist_tip(i) * (180 / pi);
-    % Dibuixar la línia amb línies més gruixudes
-    plot(spanwise_pos, CD_ap1(:, i), 'LineWidth', 2, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
+    plot(spanwise_pos, Cd_tot(:, i), 'LineWidth', 1.5, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
 end
 
-% Afegir títol i etiquetes
-title('Distribució Spanwise de Coeficients de Resistència Aerodinàmica (C_D) per diferents Angles de Twist');
-xlabel('Posició Spanwise (m)');
-ylabel('Coeficient de Resistència Aerodinàmica (C_D)');
-
-% Afegir una llegenda
-legend('show', 'Interpreter', 'latex');  % Utilitzar LaTeX per mostrar θ
-
-% Millorar la graella i els límits
+title('Distribució al llarg del span dels coeficients de resistència aerodinàmica (C_D) per diferents angles de twist');
+xlabel('Posició en l''eix de span (m)');
+ylabel('Coeficient de resistència aerodinàmica (C_{D})');
+legend('show', 'Interpreter', 'latex');
 grid on;
 xlim([min(spanwise_pos), max(spanwise_pos)]);
-ylim([min(CD_ap1(:)), max(CD_ap1(:))]);  % Limitar segons els valors de C_D per a tots els twists
-
+ylim([min(Cd_tot(:)), max(Cd_tot(:))]);
 hold off;
+
+%3) Eficiència al llarg de l'ala (span) per diferents angles de twist
+theta_deg = rad2deg(twist_tip);    % 1×11
+figure;
+plot(theta_deg, Eff_ap1, '-o', 'LineWidth',1.5)
+text(theta_deg, Eff_ap1, compose('%.1f', Eff_ap1), ...
+     'VerticalAlignment','bottom','HorizontalAlignment','right')
+grid on
+xlabel('$\theta\;(^\circ)$','Interpreter','latex')
+ylabel('$C_L/C_D$','Interpreter','latex')
+title('Eficiència vs. angle de twist','Interpreter','latex')
+
+%2) CD_viscós al llarg de l'ala (span) per diferents angles de twist
+figure;
+hold on;
+for i = 1:length(twist_tip)
+    plot(spanwise_pos, Cd_visc_pan_ap1(:, i), 'LineWidth', 1.5, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
+end
+
+title('Distribució al llarg del span dels coeficients de resistència aerodinàmica (C_{D,visc}) per diferents angles de twist');
+xlabel('Posició en l''eix de span (m)');
+ylabel('Coeficient de resistència aerodinàmica (C_{D,visc})');
+legend('show', 'Interpreter', 'latex');
+grid on;
+xlim([min(spanwise_pos), max(spanwise_pos)]);
+ylim([min(Cd_visc_pan_ap1(:)), max(Cd_visc_pan_ap1(:))]);
+hold off;
+
+
+%2) CD_induit al llarg de l'ala (span) per diferents angles de twist
+figure;
+hold on;
+for i = 1:length(twist_tip)
+    plot(spanwise_pos, Cd_ind_ap1(:, i), 'LineWidth', 1.5, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
+end
+
+title('Distribució al llarg del span dels coefs de resistència aerodinàmica (C_{D,ind}) per diferents angles de twist');
+xlabel('Posició en l''eix de span (m)');
+ylabel('Coeficient de resistència aerodinàmica (C_{D,ind})');
+legend('show', 'Interpreter', 'latex');
+grid on;
+xlim([min(spanwise_pos), max(spanwise_pos)]);
+ylim([min(Cd_ind_ap1(:)), max(Cd_ind_ap1(:))]);
+hold off;
+
+
+
+%% 2.2
+
+%Definim un twist de màxim rendiment
+
+Twist_ala = twist_tip(filaMax);
+Twist_flap = 0;
+[twist_centre_panell_actualitzat] = calcul_twist(Twist_ala, N);
+alpha_total = deg2rad(4);
+
+[gamma, A, b] = gamma_ala_can(alpha_ala, i_w, i_h, Q_inf, N, Coords_ala, Coords_centre_ala, c_ala, twist_centre_panell_actualitzat, ...
+    Cl_alpha_22112, Cl_0_22112, Coords_canard, Coords_centre_canard, c_canard, Cl_alpha_0012, Cl_0_0012, u_r);
