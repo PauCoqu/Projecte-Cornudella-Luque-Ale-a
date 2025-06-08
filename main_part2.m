@@ -62,9 +62,9 @@ alpha_ind_ap1 = zeros(N, length(twist_tip));
 Cd_visc_pan_ap1 = zeros(N, length(twist_tip));
 Cd_ind_ap1 = zeros(N, length(twist_tip));
 Cd_tot = zeros(N, length(twist_tip));
-CD_ap1 = zeros(1, length(twist_tip)); % vector per a CD
-Eff_ap1 = zeros(1, length(twist_tip)); % vector per a Eff
-Lift_ap1 = zeros(1, length(twist_tip)); % vector per a Lift
+CD_ap1 = zeros(1, length(twist_tip)); 
+Eff_ap1 = zeros(1, length(twist_tip));
+Lift_ap1 = zeros(1, length(twist_tip));
 
 u_r = [-cos(alpha_ala); 0; sin(alpha_ala)]; %vector unitari de la velocitat incident
 
@@ -82,7 +82,7 @@ fprintf('El valor de màxima eficiència de twisting és %g i es troba a un valo
 
 %% GRAFICS
 
-%1) CL al llarg de l'ala (span) per diferents angles de twist
+%1) CL al llarg de l'envergadura per diferents angles de twist
 figure;
 spanwise_pos = Coords_centre_ala(:, 2);
 hold on;
@@ -90,9 +90,9 @@ for i = 1:length(twist_tip)
     plot(spanwise_pos, CL_pan_ap1(:, i), 'LineWidth', 1.5, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
 end
 
-title('Distribució al llarg del span dels coeficients de sustentació (C_L) per diferents angles de twist');
-xlabel('Posició en l''eix de span (m)');
-ylabel('Coeficient de Sustentació (C_L)');
+title('(C_{L}) front envergadura');
+xlabel('Posició en l''envergadura (m)');
+ylabel('C_{L}');
 legend('show', 'Interpreter', 'latex');
 grid on;
 xlim([min(spanwise_pos), max(spanwise_pos)]);
@@ -100,23 +100,23 @@ ylim([min(CL_pan_ap1(:)), max(CL_pan_ap1(:))]);
 hold off;
 
 
-%2) CD al llarg de l'ala (span) per diferents angles de twist
+%2) CD al llarg de l'envergadura per diferents angles de twist
 figure;
 hold on;
 for i = 1:length(twist_tip)
     plot(spanwise_pos, Cd_tot(:, i), 'LineWidth', 1.5, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
 end
 
-title('Distribució al llarg del span dels coeficients de resistència aerodinàmica (C_D) per diferents angles de twist');
-xlabel('Posició en l''eix de span (m)');
-ylabel('Coeficient de resistència aerodinàmica (C_{D})');
+title('C_{D} front envergadura');
+xlabel('Posició en l''envergadura (m)');
+ylabel('C_{D}');
 legend('show', 'Interpreter', 'latex');
 grid on;
 xlim([min(spanwise_pos), max(spanwise_pos)]);
 ylim([min(Cd_tot(:)), max(Cd_tot(:))]);
 hold off;
 
-%3) Eficiència al llarg de l'ala (span) per diferents angles de twist
+%3) Eficiència al llarg de l'envergadura per diferents angles de twist
 theta_deg = rad2deg(twist_tip);    % 1×11
 figure;
 plot(theta_deg, Eff_ap1, '-o', 'LineWidth',1.5)
@@ -127,16 +127,16 @@ xlabel('$\theta\;(^\circ)$','Interpreter','latex')
 ylabel('$C_L/C_D$','Interpreter','latex')
 title('Eficiència vs. angle de twist','Interpreter','latex')
 
-%2) CD_viscós al llarg de l'ala (span) per diferents angles de twist
+%2) CD_viscós al llarg de l'envergadura per diferents angles de twist
 figure;
 hold on;
 for i = 1:length(twist_tip)
     plot(spanwise_pos, Cd_visc_pan_ap1(:, i), 'LineWidth', 1.5, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
 end
 
-title('Distribució al llarg del span dels coeficients de resistència aerodinàmica (C_{D,visc}) per diferents angles de twist');
-xlabel('Posició en l''eix de span (m)');
-ylabel('Coeficient de resistència aerodinàmica (C_{D,visc})');
+title('C_{D,visc} front envergadura');
+xlabel('Posició en l''envergadura (m)');
+ylabel('C_{D,visc}');
 legend('show', 'Interpreter', 'latex');
 grid on;
 xlim([min(spanwise_pos), max(spanwise_pos)]);
@@ -144,16 +144,16 @@ ylim([min(Cd_visc_pan_ap1(:)), max(Cd_visc_pan_ap1(:))]);
 hold off;
 
 
-%2) CD_induit al llarg de l'ala (span) per diferents angles de twist
+%2) CD_induit al llarg de l'envergadura per diferents angles de twist
 figure;
 hold on;
 for i = 1:length(twist_tip)
     plot(spanwise_pos, Cd_ind_ap1(:, i), 'LineWidth', 1.5, 'DisplayName', sprintf('$\\theta = %.2f^\\circ$', rad2deg(twist_tip(i))));
 end
 
-title('Distribució al llarg del span dels coefs de resistència aerodinàmica (C_{D,ind}) per diferents angles de twist');
-xlabel('Posició en l''eix de span (m)');
-ylabel('Coeficient de resistència aerodinàmica (C_{D,ind})');
+title('C_{D,ind} front envergadura');
+xlabel('Posició en l''envergadura (m)');
+ylabel('C_{D,ind}');
 legend('show', 'Interpreter', 'latex');
 grid on;
 xlim([min(spanwise_pos), max(spanwise_pos)]);
@@ -182,8 +182,6 @@ gamma_can=gamma(N+1:end,1);
     calcul_coef(N, gamma_ala, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell_actualitzat, Coords_ala, rho, Q_inf, S, c_ala, "ala");
 [CL_can, Cl_pancan, alpha_ind_can, Cd_visc_pancan, Cd_ind_can, Cd_tot_can, CD_can, Eff_can, Lift_can] = ...
     calcul_coef(N, gamma_can, alpha_ala, Cl_alpha_0012, Cl_0_0012, i_h, twist_centre_flap, Coords_canard, rho, Q_inf, S_h, c_canard, "canard");
-
-
 
 
 long_a=Coords_ala(round(N+1/2),1);
