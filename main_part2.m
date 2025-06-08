@@ -167,7 +167,6 @@ hold off;
 %Definim un twist de màxim rendiment
 
 Twist_ala = twist_tip(filaMax);
-Twist_ala = deg2rad(-3.5);
 Twist_flap = 0;
 [twist_centre_panell_actualitzat] = calcul_twist(Twist_ala, N);
 [twist_centre_flap] = calcul_twist(Twist_flap, N);
@@ -191,4 +190,4 @@ long_a=Coords_ala(round(N+1/2),1);
 
 dist_c=abs(Coords_canard(round(N+1/2),1));
 
-%dist=(Lift_ala*long_a+Lift_can*dist_c)/(L_wing+L_canard);
+%dist=(Lift_ala*long_a+Lift_can*dist_c)/(Lift_ala+Lift_can);
