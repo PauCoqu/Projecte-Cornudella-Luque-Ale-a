@@ -1,4 +1,4 @@
-function [gamma, A, b] = gamma_ala_can(alpha, incid_a, incid_can, Q_inf, N, Coords_a, Coords_c_a, c_a, twist_a, ...
+function [gamma_ala, gamma_can, A, b] = gamma_ala_can(alpha, incid_a, incid_can, Q_inf, N, Coords_a, Coords_c_a, c_a, twist_a, ...
     Cl_alpha_22112, Cl_0_22112, Coords_can, Coords_c_can, c_can, Cl_alpha_0012, Cl_0_0012, u_r)
 
 Na=N;
@@ -45,7 +45,7 @@ end
 
 % A22, b22 (can sobre can)
 for i=1:Nc
-    b_22(i)=0.5*c_can(i)*Q_inf*(Cl_0_0012+Cl_alpha_0012*(alpha+twist_a(i)+incid_can));
+    b_22(i)=0.5*c_can(i)*Q_inf*(Cl_0_0012+Cl_alpha_0012*(alpha+0+incid_can)); %canard 0 angle twist
     for j=1:Nc
         if j==i
             V_ii = auto_velocinduida(Coords_c_can(i,:), Coords_can(j,:), Coords_can(j+1,:), u_r);
@@ -71,4 +71,6 @@ b = [b_11;b_22];
 gamma=A\b;
 
 gamma_ala=gamma(1:N,1);
-gamma_can=gamma(1:N,1);
+gamma_can=gamma(N:end,1);
+
+end

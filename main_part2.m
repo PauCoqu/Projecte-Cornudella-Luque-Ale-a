@@ -167,23 +167,28 @@ hold off;
 %Definim un twist de màxim rendiment
 
 Twist_ala = twist_tip(filaMax);
+Twist_ala = deg2rad(-3.5);
 Twist_flap = 0;
 [twist_centre_panell_actualitzat] = calcul_twist(Twist_ala, N);
+[twist_centre_flap] = calcul_twist(Twist_flap, N);
 
-[gamma_ala, gamma_can, A, b] = gamma_ala_can(alpha_ala, i_w, i_h, Q_inf, N, Coords_ala, Coords_centre_ala, c_ala, twist_centre_panell_actualitzat, ...
+
+[gamma, A, b] = gamma_ala_can(alpha_ala, i_w, i_h, Q_inf, N, Coords_ala, Coords_centre_ala, c_ala, twist_centre_panell_actualitzat, ...
     Cl_alpha_22112, Cl_0_22112, Coords_canard, Coords_centre_canard, c_canard, Cl_alpha_0012, Cl_0_0012, u_r);
 
+gamma_ala=gamma(1:N,1);
+gamma_can=gamma(N+1:end,1);
+
 [CL_ala, CL_panala, alpha_ind_ala, Cd_visc_panala, Cd_ind_ala, Cd_tot_ala, CD_ala, Eff_ala, Lift_ala] = ...
-    calcul_coef(N, gamma_ala, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, Twist_ala, Coords_ala, rho, Q_inf, S, c_ala, "ala");
-
+    calcul_coef(N, gamma_ala, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell_actualitzat, Coords_ala, rho, Q_inf, S, c_ala, "ala");
 [CL_can, Cl_pancan, alpha_ind_can, Cd_visc_pancan, Cd_ind_can, Cd_tot_can, CD_can, Eff_can, Lift_can] = ...
-    calcul_coef(N, gamma_can, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, Twist_ala, Coords_ala, rho, Q_inf, S, c_ala, "ala");
+    calcul_coef(N, gamma_can, alpha_ala, Cl_alpha_0012, Cl_0_0012, i_h, twist_centre_flap, Coords_canard, rho, Q_inf, S_h, c_canard, "canard");
 
 
 
 
-long_a=Coords_ala(1,round(N+1/2));
+long_a=Coords_ala(round(N+1/2),1);
 
-dist_c=abs(Coords_canard(1,round(N+1/2)));
+dist_c=abs(Coords_canard(round(N+1/2),1));
 
-dist=(Lift_ala*dist_w+Lift_can*dist_c)/(L_wing+L_canard);
+%dist=(Lift_ala*long_a+Lift_can*dist_c)/(L_wing+L_canard);

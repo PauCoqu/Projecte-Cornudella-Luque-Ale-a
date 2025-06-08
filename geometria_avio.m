@@ -14,7 +14,7 @@ Coords_centre_panell = (Coords_ala(1:end-1, :) + Coords_ala(2:end, :)) / 2;
 c_ala = c_r - (abs(Coords_centre_panell(:,2))*(c_r-c_t))/(b/2);
 
 %Ara discretitzem el canard (CORREGIR!)
-Canard_coords_x = zeros(N+1, 1);                 
+Canard_coords_x = -l_h * ones(N+1, 1);                 
 Canard_coords_y = linspace(-b_h/2, b_h/2, N+1)';
 Canard_coords_z = zeros(N+1, 1);
 Coords_canard = [Canard_coords_x, Canard_coords_y, Canard_coords_z];
