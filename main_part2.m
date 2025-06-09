@@ -50,7 +50,8 @@ Re = (rho*Q_inf*c_mitjah)/(1.81e-5);
 %Un cop ho tiguem ho grafiquem també per altres angles de twist i el que
 %millor distribució de lift doni serà el que triem.
 
-twist_tip = [-10,-8,-6,-4,-2,0,2,4,6,8,10]; %angle de twist a la punta de l'ala
+%twist_tip = [-1,-0.99,-0.98,-0.97,-0.96,-0.95,-0.94,-0.93,-0.92,-0.91,-0.9,-0.89,-0.88,-0.87,-0.86]; %angle de twist a la punta de l'ala
+twist_tip = [-10,-8,-6,-4,-2,0,2,4,6,8,10];
 twist_tip = deg2rad(twist_tip);
 alpha_ala = deg2rad(4); %enunciat
 
