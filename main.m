@@ -32,7 +32,7 @@ switch file_name
     case 6
         file_name = 'NACA_22112_N_512.txt'; 
     otherwise
-        disp('Elecció no vàlida. S''assigna el fitxer per defecte: NACA_0012_N_16.txt');
+        disp('Elecció no vàlida. S''assigna el fitxer per defecte: NACA_22112_N_16.txt');
         file_name = 'NACA_22112_N_16.txt';
 end
 

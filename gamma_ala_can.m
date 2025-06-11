@@ -25,7 +25,6 @@ for i=1:Na
     end
 end
 
-
 % A12, b12 (canard sobre ala)
 for i=1:Na
     for j=1:Nc
@@ -59,17 +58,12 @@ for i=1:Nc
     end
 end
 
-
-
 %NO CAL FER LA INCIDÈNCIA DEL VTP SOBRE L'ALA I EL FLAP PERQUÈ NO ES
 %GENEREN ENTRE ELLS, (SÓN PERPENDICULARS)
-
 
 A = [A_11, A_12; A_21, A_22];
 b = [b_11;b_22];
 
 gamma=A\b;
-
-
 
 end

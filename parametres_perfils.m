@@ -1,4 +1,4 @@
-function [Cl_alpha_22112,Cl_alpha_0012, Cl_0_0012, Cl_0_22112] = parametres_perfils ()
+function [Cl_alpha_22112,Cl_alpha_0012, Cl_0_0012, Cl_0_22112, Cl_0_0012_flap12, Cl_alpha_0012_flap12, Cm_0_0012_flap12, Cm_0_22112] = parametres_perfils ()
 
 %Emmagatzemem els coeficients aerodinamics Cl i de moment Cm 1/4 de l'apartat 1 per cada angle d'atac
 alpha = [0,1,2,3,4,5,6,7,8,9,10];
@@ -9,6 +9,12 @@ alpha_rad = deg2rad(alpha);
 Cl_0012 = [0, 0.1198, 0.2395, 0.3591, 0.4787, 0.5981, 0.7173, 0.8363, 0.9550, 1.0735, 1.1916]; %Nostres valors (de 0-10º)
 Cm_1I4_0012 = [0, -0.0017, -0.0035, -0.0051, -0.0066, -0.0081, -0.0093, -0.0104, -0.0113, -0.0119, -0.0123]; %Nostres valors (de 0-10º)
 
+
+%Parametres NACA 0012 (Canard) amb flap = 12º
+Cl_0012_flap12 = [0.9379, 1.0511, 1.1640, 1.2766, 1.3887, 1.5005, 1.6117, 1.7225, 1.8328, 1.9425, 2.0516]; %Nostres valors (de 0-10º)
+Cm_1I4_0012_flap12 = [-0.1362, -0.1361, -0.1359, -0.1356, -0.1351, -0.1346, -0.1340, -0.1333, -0.1325, -0.1316, -0.1306]; %Nostres valors (de 0-10º)
+
+
 %Parametres NACA 22112 (Ala)  
 %Cl_22112 = [-0.0329, 0.3280, 0.4460, 0.5233, 0.6058, 0.6908, 0.7685, 0.8397, 0.8556]; %Airfool tools (de 0-8º)
 Cl_22112 = [0.0896, 0.2074 ,0.3252, 0.4429 , 0.5604, 0.6778 , 0.7950, 0.9119 , 1.0285, 1.1449 , 1.2608]; %Nostres valors (de 0-10º)
@@ -18,15 +24,28 @@ Cm_1I4_22112 = [9.5e-4, -5.3067e-4, -0.0020, -0.0035, -0.0049, -0.0062, -0.0074,
 %Fem un ployfit; Cl = Cl_0 + Cl_alpha*alpha
 pCl_0012 = polyfit(alpha_rad, Cl_0012, 1); %p(1) = Cl_alpha ; p(2) = Cl_0;
 pCl_22112 = polyfit(alpha_rad,Cl_22112,1); %p(1) = Cl_alpha ; p(2) = Cl_0;
+pCm_22112 = polyfit(alpha_rad, Cm_1I4_22112, 1); %p(1) = Cm_L ; p(2) = Cm_0;
+
+%Fem un ployfit; Cl = Cl_0 + Cl_alpha*alpha per flap = 12º
+pCl_0012_flap = polyfit(alpha_rad, Cl_0012_flap12, 1); %p(1) = Cl_alpha ; p(2) = Cl_0;
+pCm_0012_flap = polyfit(alpha_rad, Cm_1I4_0012_flap12, 1); %p(1) = Cm_L ; p(2) = Cm_0;
+
 
 %Amb polyval podem saber qualsevol valor del polyfit Cl_05 = ployval(p,0.5);
 Cl_alpha_22112 = pCl_22112(1);
 Cl_alpha_0012 = pCl_0012(1);
 Cl_0_22112 = pCl_22112(2);
 Cl_0_0012 = pCl_0012(2);
+Cl_alpha_0012_flap12 = pCl_0012_flap(1);
+Cl_0_0012_flap12 = pCl_0012_flap(2);
+Cm_alpha_0012_flap12 = pCm_0012_flap(1);
+Cm_0_0012_flap12 = pCm_0012_flap(2);
+Cm_alpha_22112 = pCm_22112(1);
+Cm_0_22112 = pCm_22112(2);
 
 Cm_mig_22112 = mean(Cm_1I4_22112);
 Cm_mig_0012 = mean(Cm_1I4_0012);
+Cm_mig_0012_flap = mean(Cm_1I4_0012_flap12);
 
 % figure
 % plot(alpha_rad, Cl_22112, '-o', 'MarkerSize', 6, 'DisplayName', 'NACA 22112'); 
