@@ -24,11 +24,7 @@ for i=1:N
     Cd_visc = polyval(Cd_visc_coeffs, CL_pan(i)); % Avalua polinomi: a*CL^2 + b*CL + c
     CD_visc_pan(i) = (Cd_visc*c(i)*Delta_y)/S;
     CD_tot(i) = CD_visc_pan(i) + CD_ind(i); %CD total
-    
-    %Calcul moments
-    
-    %(Coords_c(i) * gamma_centre(i) * Delta_y) / (norm(Q_inf) * S * c_mitja);
-   
+       
     
 end
 

@@ -42,7 +42,7 @@ Re = (rho*Q_inf*c_mitjah)/(1.81e-5);
 %%
 
 %Rectes Cl vs alpha de cada perfil
-[Cl_alpha_22112,Cl_alpha_0012, Cl_0_0012, Cl_0_22112, Cl_0_0012_flap12, Cl_alpha_0012_flap12, Cm_0_0012_flap12, Cm_0_22112] = parametres_perfils ();
+[Cl_alpha_22112,Cl_alpha_0012, Cl_0_0012, Cl_0_22112, Cl_0_0012_flap12, Cl_alpha_0012_flap12, Cm_0_0012_flap12, Cm_0_22112, Cm_0_0012] = parametres_perfils ();
 
 %Discretitzem l'ala i el canard, i la coorda en cada punt
 [Coords_ala, Coords_centre_ala, c_ala, Coords_canard, Coords_centre_canard, c_canard] = geometria_avio (N,b_a,c_r,c_t,b_h,c_rh,c_th,l_h);
@@ -172,7 +172,7 @@ Twist_ala = deg2rad(-0.89);
 Twist_flap = 0;
 [twist_centre_panell_actualitzat] = calcul_twist(Twist_ala, N);
 [twist_centre_flap] = calcul_twist(Twist_flap, N);
-
+alpha_ala=deg2rad(4);
 
 [gamma, A, b] = gamma_ala_can(alpha_ala, i_w, i_h, Q_inf, N, Coords_ala, Coords_centre_ala, c_ala, twist_centre_panell_actualitzat, ...
     Cl_alpha_22112, Cl_0_22112, Coords_canard, Coords_centre_canard, c_canard, Cl_alpha_0012, Cl_0_0012, u_r);
@@ -184,10 +184,9 @@ gamma_can=gamma(N+1:end,1);
     calcul_coef(N, gamma_ala, alpha_ala, Cl_alpha_22112, Cl_0_22112, i_w, twist_centre_panell_actualitzat, Coords_ala, rho, Q_inf, S, c_ala, Cd_visc_coeffs_ala);
 
 [CL_can, Cl_pancan, alpha_ind_can, Cd_visc_pancan, Cd_ind_can, Cd_tot_can, CD_can, Eff_can, Lift_can] = ...
-    calcul_coef(N, gamma_can, alpha_ala, Cl_alpha_0012, Cl_0_0012, i_h, twist_centre_flap, Coords_canard, rho, Q_inf, S_h, c_canard, Cd_visc_coeffs_ala);
+    calcul_coef(N, gamma_can, alpha_ala, Cl_alpha_0012, Cl_0_0012, i_h, twist_centre_flap, Coords_canard, rho, Q_inf, S_h, c_canard, Cd_visc_coeffs_can);
 
-CM = calculCentreMassa(Coords_ala, Coords_canard, N, Lift_ala, Lift_can);
-
+CM = calculCentreMassa(Coords_ala, Coords_canard, N, Lift_ala, Lift_can, Cm_0_0012, Cm_0_22112, c_mitja, c_mitjah);
 
 
 %% 3. Aerodynamic polar curve per angles d'atac de 0 a 6.
@@ -236,7 +235,7 @@ hold off;
 
 
 
-%% 4. Aerodynamic polar curve per angles d'atac de 0 a 6.
+%% 4. Calculs per alpha = 4.
 
 alpha_ala =  4;
 alpha_ala = deg2rad(alpha_ala);
